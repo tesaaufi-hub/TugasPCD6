@@ -48,7 +48,7 @@ public class SistemPertandingan {
             System.out.println("2. Lihat Daftar Pertandingan");
             System.out.println("3. Cari Pertandingan");
             System.out.println("4. Keluar");
-            System.out.print("Pilih Menu: 1-4: ");
+            System.out.print("Pilih Menu (1-4): ");
 
             int pilihan = scanner.nextInt();
             scanner.nextLine();
@@ -72,10 +72,12 @@ public class SistemPertandingan {
                         daftarPertandingan[jumlahPertandingan] = pertandinganBaru;
 
                         jumlahPertandingan++;
-                        System.out.println("Sukses! Objek Pertandingan berhasil diciptakan dan ditambahkan.");
+                        Pertandingan.totalPertandinganBerhasilDibuat++;
+                        System.out.println("Sukses! Pertandingan berhasil ditambahkan.");
                     } else {
                         System.out.println("Maaf, kapasitas daftar pertandingan sudah penuh!");
                     }
+                    scanner.nextLine();
                     break;
 
                 case 2:
@@ -88,27 +90,34 @@ public class SistemPertandingan {
                             daftarPertandingan[i].tampilkanInfoPertandingan();
                         }
                     }
+
+                    System.out.println("\nTotal Pertandingan Fisik yang Terdaftar: " + Pertandingan.totalPertandinganBerhasilDibuat);
+                    System.out.print("Tekan Enter untuk melanjutkan...");
+                    scanner.nextLine();
                     break;
 
                 case 3:
-                    System.out.println("\n--- Cari Pertandingan ---");
-                    System.out.println("1. Cari Berdasarkan Nama Pertandingan");
-                    System.out.println("2. Cari Berdasarkan Nama Tim");
-                    System.out.print("Pilih Opsi Cari (1-2): ");
-                    int opsiCari = scanner.nextInt();
+                    System.out.println("\n-- Fitur Cari Pertandingan --");
+                    System.out.println("1. Cari berdasarkan Nama Pertandingan");
+                    System.out.println("2. Cari berdasarkan Nama Tim");
+                    System.out.print("Pilih (1/2): ");
+                    int modeCari = scanner.nextInt();
                     scanner.nextLine();
 
-                    if (opsiCari == 1) {
+                    if (modeCari == 1) {
                         System.out.print("Masukkan Nama Pertandingan: ");
-                        String namaCari = scanner.nextLine();
-                        cariPertandingan(namaCari, daftarPertandingan, jumlahPertandingan);
-                    } else if (opsiCari == 2) {
+                        String kataKunci = scanner.nextLine();
+                        cariPertandingan(kataKunci, daftarPertandingan, jumlahPertandingan);
+                    } else if (modeCari == 2) {
                         System.out.print("Masukkan Nama Tim: ");
-                        String timCari = scanner.nextLine();
-                        cariPertandingan(timCari, daftarPertandingan, jumlahPertandingan, true);
+                        String kataKunci = scanner.nextLine();
+                        cariPertandingan(kataKunci, daftarPertandingan, jumlahPertandingan, true);
                     } else {
-                        System.out.println("Opsi pencarian tidak valid.");
+                        System.out.println("Pilihan tidak valid.");
                     }
+
+                    System.out.print("Tekan Enter untuk melanjutkan...");
+                    scanner.nextLine();
                     break;
 
                 case 4:
