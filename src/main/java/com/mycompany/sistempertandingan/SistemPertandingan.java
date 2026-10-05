@@ -9,7 +9,6 @@ public class SistemPertandingan {
         boolean ditemukan = false;
         for (int i = 0; i < jumlahOlahraga; i++) {
             if (daftarOlahraga[i].getNamaPertandingan().equalsIgnoreCase(namaPertandingan)) {
-                System.out.print("- Ditemukan: ");
                 daftarOlahraga[i].tampilkanInfo();
                 ditemukan = true;
             }
@@ -22,12 +21,15 @@ public class SistemPertandingan {
         boolean ditemukan = false;
         for (int i = 0; i < jumlahOlahraga; i++) {
             if (daftarOlahraga[i].getTim1().equalsIgnoreCase(tim) || daftarOlahraga[i].getTim2().equalsIgnoreCase(tim)) {
-                System.out.print("- Ditemukan: ");
                 daftarOlahraga[i].tampilkanInfo();
                 ditemukan = true;
             }
         }
         if (!ditemukan) System.out.println("Pertandingan tidak ditemukan.");
+    }
+
+    public static void simulasiPertandingan(Olahraga item) {
+        item.mulaiPertandingan();
     }
 
     public static void main(String[] args) {
@@ -46,7 +48,7 @@ public class SistemPertandingan {
             System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Pertandingan");
             System.out.println("2. Lihat Daftar Pertandingan");
-            System.out.println("3. Cari Pertandingan");
+            System.out.println("3. Cari Pertandingan (Fitur Overloading)");
             System.out.println("4. Keluar");
             System.out.print("Pilih Menu: 1-4: ");
 
@@ -59,7 +61,8 @@ public class SistemPertandingan {
                         System.out.println("\n-- Pilih Jenis Pertandingan --");
                         System.out.println("1. Futsal");
                         System.out.println("2. Basket");
-                        System.out.print("Pilihan (1/2): ");
+                        System.out.println("3. Voli");
+                        System.out.print("Pilihan (1/2/3): ");
 
                         int jenis = scanner.nextInt();
                         scanner.nextLine();
@@ -85,15 +88,21 @@ public class SistemPertandingan {
                             scanner.nextLine();
 
                             daftarOlahraga[jumlahOlahraga] = new Basket(namaBaru, tim1Baru, tim2Baru, quarter);
+                        } else if (jenis == 3) {
+                            System.out.print("Masukkan Jumlah Set: ");
+                            int set = scanner.nextInt();
+                            scanner.nextLine();
+
+                            daftarOlahraga[jumlahOlahraga] = new Voli(namaBaru, tim1Baru, tim2Baru, set);
                         }
 
                         jumlahOlahraga++;
                         System.out.println("Sukses! Pertandingan berhasil ditambahkan.");
+                        System.out.print("Tekan Enter untuk melanjutkan...");
+                        scanner.nextLine();
                     } else {
                         System.out.println("Maaf, kapasitas daftar pertandingan sudah penuh!");
                     }
-                    System.out.print("Tekan Enter untuk melanjutkan...");
-                    scanner.nextLine();
                     break;
 
                 case 2:
@@ -104,20 +113,20 @@ public class SistemPertandingan {
                         for (int i = 0; i < jumlahOlahraga; i++) {
                             System.out.print((i + 1) + ". ");
                             daftarOlahraga[i].tampilkanInfo();
-                            daftarOlahraga[i].mulaiPertandingan();
-                            System.out.println();
+                            simulasiPertandingan(daftarOlahraga[i]);
+                            System.out.println("");
                         }
                     }
 
-                    System.out.println("Total pertandingan: " + Olahraga.totalOlahragaBerhasilDibuat);
+                    System.out.println("\nTotal Pertandingan Terdaftar: " + Olahraga.totalOlahragaBerhasilDibuat);
                     System.out.print("Tekan Enter untuk melanjutkan...");
                     scanner.nextLine();
                     break;
 
                 case 3:
                     System.out.println("\n-- Fitur Cari Pertandingan --");
-                    System.out.println("1. Cari berdasarkan Nama Pertandingan");
-                    System.out.println("2. Cari berdasarkan Nama Tim");
+                    System.out.println("1. Cari berdasarkan Nama Pertandingan (String)");
+                    System.out.println("2. Cari berdasarkan Tim (String & Boolean)");
                     System.out.print("Pilih (1/2): ");
                     int modeCari = scanner.nextInt();
                     scanner.nextLine();
