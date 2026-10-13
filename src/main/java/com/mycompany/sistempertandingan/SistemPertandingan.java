@@ -37,7 +37,11 @@ public class SistemPertandingan {
 
         Olahraga[] daftarOlahraga = new Olahraga[10];
 
-        int jumlahOlahraga = 0;
+        daftarOlahraga[0] = new Futsal("Final League", "Garuda", "Elang", 60);
+        daftarOlahraga[1] = new Basket("Cup Semifinal", "Bulls", "Lakers", 4);
+        daftarOlahraga[2] = new Voli("ProLiga Match", "Petro", "Electrik", 5);
+
+        int jumlahOlahraga = 3;
         boolean isRunning = true;
 
         System.out.println("==========================================");
@@ -108,17 +112,30 @@ public class SistemPertandingan {
                 case 2:
                     System.out.println("\n--- Daftar Pertandingan ---");
                     if (jumlahOlahraga == 0) {
-                        System.out.println("Belum ada pertandingan yang tersimpan.");
+                        System.out.println("Belum ada pertandingan yang tersimpan");
                     } else {
                         for (int i = 0; i < jumlahOlahraga; i++) {
                             System.out.print((i + 1) + ". ");
                             daftarOlahraga[i].tampilkanInfo();
                             simulasiPertandingan(daftarOlahraga[i]);
-                            System.out.println("");
+
+                            daftarOlahraga[i].hitungBiayaSewa();
+
+                            if (daftarOlahraga[i] instanceof JadwalMatch) {
+                                JadwalMatch itemDijadwalkan = (JadwalMatch) daftarOlahraga[i];
+                                itemDijadwalkan.aturJadwal("15 Oktober 2026", "Utama");
+                            }
+
+                            if (daftarOlahraga[i] instanceof PenilaianMatch) {
+                                PenilaianMatch itemBisaDinilai = (PenilaianMatch) daftarOlahraga[i];
+                                itemBisaDinilai.beriRating(5);
+                            }
+
+                            System.out.println();
                         }
                     }
 
-                    System.out.println("\nTotal Pertandingan Terdaftar: " + Olahraga.totalOlahragaBerhasilDibuat);
+                    System.out.println("* Total Olahraga: " + Olahraga.totalOlahragaBerhasilDibuat);
                     System.out.print("Tekan Enter untuk melanjutkan...");
                     scanner.nextLine();
                     break;

@@ -1,6 +1,6 @@
 package com.mycompany.sistempertandingan;
 
-public class Olahraga {
+public abstract class Olahraga {
     protected String namaPertandingan;
     protected String tim1;
     protected String tim2;
@@ -25,4 +25,6 @@ public class Olahraga {
     public void mulaiPertandingan() {
         System.out.println("Pertandingan dimulai secara umum.");
     }
+
+    public abstract void hitungBiayaSewa();
 }

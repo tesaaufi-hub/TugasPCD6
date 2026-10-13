@@ -1,6 +1,6 @@
 package com.mycompany.sistempertandingan;
 
-public class Voli extends Olahraga {
+public class Voli extends Olahraga implements JadwalMatch {
     private int jumlahSet;
 
     public Voli(String namaPertandingan, String tim1, String tim2, int jumlahSet) {
@@ -17,5 +17,16 @@ public class Voli extends Olahraga {
     @Override
     public void mulaiPertandingan() {
         System.out.println("-> Info Pertandingan: Voli dimulai dengan Servis dari belakang garis lapangan.");
+    }
+
+    @Override
+    public void hitungBiayaSewa() {
+        int totalBiaya = jumlahSet * 40000;
+        System.out.println("-> Biaya Sewa Lapangan Voli: Rp " + totalBiaya);
+    }
+
+    @Override
+    public void aturJadwal(String tanggal, String lapangan) {
+        System.out.println("-> [JADWAL] Voli dijadwalkan tanggal " + tanggal + " di Lapangan " + lapangan);
     }
 }

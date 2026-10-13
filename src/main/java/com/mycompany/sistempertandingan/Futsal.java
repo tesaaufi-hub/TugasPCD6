@@ -1,6 +1,6 @@
 package com.mycompany.sistempertandingan;
 
-public class Futsal extends Olahraga {
+public class Futsal extends Olahraga implements JadwalMatch, PenilaianMatch {
     private int durasiMenit;
 
     public Futsal(String namaPertandingan, String tim1, String tim2, int durasiMenit) {
@@ -17,5 +17,21 @@ public class Futsal extends Olahraga {
     @Override
     public void mulaiPertandingan() {
         System.out.println("-> Info Pertandingan: Futsal dimulai dengan kick-off di tengah lapangan.");
+    }
+
+    @Override
+    public void hitungBiayaSewa() {
+        int totalBiaya = (durasiMenit / 60) * 150000;
+        System.out.println("-> Biaya Sewa Lapangan Futsal: Rp " + totalBiaya);
+    }
+
+    @Override
+    public void aturJadwal(String tanggal, String lapangan) {
+        System.out.println("-> [JADWAL] Futsal dijadwalkan tanggal " + tanggal + " di Lapangan " + lapangan);
+    }
+
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println("-> [RATING] Match Futsal mendapat rating " + bintang + "/5 Bintang.");
     }
 }

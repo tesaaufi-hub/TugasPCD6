@@ -1,6 +1,6 @@
 package com.mycompany.sistempertandingan;
 
-public class Basket extends Olahraga {
+public class Basket extends Olahraga implements PenilaianMatch {
     private int jumlahQuarter;
 
     public Basket(String namaPertandingan, String tim1, String tim2, int jumlahQuarter) {
@@ -17,5 +17,16 @@ public class Basket extends Olahraga {
     @Override
     public void mulaiPertandingan() {
         System.out.println("-> Info Pertandingan: Basket dimulai dengan Jump Ball oleh wasit.");
+    }
+
+    @Override
+    public void hitungBiayaSewa() {
+        int totalBiaya = jumlahQuarter * 50000;
+        System.out.println("-> Biaya Sewa Lapangan Basket: Rp " + totalBiaya);
+    }
+
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println("-> [RATING] Match Basket mendapat rating " + bintang + "/5 Bintang.");
     }
 }
