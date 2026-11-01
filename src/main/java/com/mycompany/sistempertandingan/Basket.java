@@ -3,8 +3,11 @@ package com.mycompany.sistempertandingan;
 public class Basket extends Olahraga implements PenilaianMatch {
     private int jumlahQuarter;
 
-    public Basket(String namaPertandingan, String tim1, String tim2, int jumlahQuarter) {
+    public Basket(String namaPertandingan, String tim1, String tim2, int jumlahQuarter) throws Exception {
         super(namaPertandingan, tim1, tim2);
+        if (jumlahQuarter <= 0) {
+            throw new Exception("Jumlah quarter harus lebih dari 0!");
+        }
         this.jumlahQuarter = jumlahQuarter;
     }
 

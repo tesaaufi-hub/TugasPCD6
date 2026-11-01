@@ -3,8 +3,11 @@ package com.mycompany.sistempertandingan;
 public class Voli extends Olahraga implements JadwalMatch {
     private int jumlahSet;
 
-    public Voli(String namaPertandingan, String tim1, String tim2, int jumlahSet) {
+    public Voli(String namaPertandingan, String tim1, String tim2, int jumlahSet) throws Exception {
         super(namaPertandingan, tim1, tim2);
+        if (jumlahSet <= 0) {
+            throw new Exception("Jumlah set harus lebih dari 0!");
+        }
         this.jumlahSet = jumlahSet;
     }
 

@@ -3,8 +3,11 @@ package com.mycompany.sistempertandingan;
 public class Futsal extends Olahraga implements JadwalMatch, PenilaianMatch {
     private int durasiMenit;
 
-    public Futsal(String namaPertandingan, String tim1, String tim2, int durasiMenit) {
+    public Futsal(String namaPertandingan, String tim1, String tim2, int durasiMenit) throws Exception {
         super(namaPertandingan, tim1, tim2);
+        if (durasiMenit <= 0) {
+            throw new Exception("Durasi menit harus lebih dari 0!");
+        }
         this.durasiMenit = durasiMenit;
     }
 
