@@ -144,6 +144,7 @@ public class SistemPertandingan {
                 System.out.println("\n[ERROR SISTEM] Terjadi kegagalan: " + e.getMessage());
             }
         }
+        
         scanner.close();
     }
 }
