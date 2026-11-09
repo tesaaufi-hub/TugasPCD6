@@ -1,52 +1,26 @@
 package com.mycompany.sistempertandingan;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SistemPertandingan {
 
-    public static void cariOlahraga(String namaPertandingan, ArrayList<Olahraga> daftarOlahraga) throws PertandinganTidakDitemukanException {
-        System.out.println("Mencari Pertandingan dengan Nama: " + namaPertandingan);
-        boolean ditemukan = false;
-
-        for (int i = 0; i < daftarOlahraga.size(); i++) {
-            if (daftarOlahraga.get(i).getNamaPertandingan().equalsIgnoreCase(namaPertandingan)) {
-                daftarOlahraga.get(i).tampilkanInfo();
-                ditemukan = true;
-            }
-        }
-
-        if (!ditemukan) {
-            throw new PertandinganTidakDitemukanException("Gagal: Pertandingan dengan nama '" + namaPertandingan + "' tidak terdaftar di sistem.");
-        }
-    }
-
-    public static void simulasiPertandingan(Olahraga item) {
-        item.mulaiPertandingan();
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        ArrayList<Olahraga> daftarOlahraga = new ArrayList<>();
-        HashMap<String, String> dataTim = new HashMap<>();
+        Stadion stadion = new Stadion("Stadion Utama");
+        stadion.bukaStadion();
 
         boolean isRunning = true;
-
-        System.out.println("==========================================");
-        System.out.println("    SELAMAT DATANG DI SISTEM PERTANDINGAN   ");
-        System.out.println("==========================================");
 
         while (isRunning) {
             System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Pertandingan");
             System.out.println("2. Lihat Daftar Pertandingan");
-            System.out.println("3. Cari Pertandingan (Demo Custom Exception)");
-            System.out.println("4. Kelola Data Tim (HashMap)");
-            System.out.println("5. Keluar");
-            System.out.print("Pilih Menu: 1-5: ");
+            System.out.println("3. Cari Pertandingan");
+            System.out.println("4. Kelola Tim");
+            System.out.println("5. Transaksi Pertandingan (Demo Association)");
+            System.out.println("6. Keluar");
+            System.out.print("Pilih Menu: 1-6: ");
 
             try {
                 int pilihan = scanner.nextInt();
@@ -64,44 +38,32 @@ public class SistemPertandingan {
                         scanner.nextLine();
 
                         System.out.print("Masukkan Nama Pertandingan: ");
-                        String namaBaru = scanner.nextLine();
+                        String nama = scanner.nextLine();
 
                         System.out.print("Masukkan Tim 1: ");
-                        String tim1Baru = scanner.nextLine();
+                        String tim1 = scanner.nextLine();
 
                         System.out.print("Masukkan Tim 2: ");
-                        String tim2Baru = scanner.nextLine();
+                        String tim2 = scanner.nextLine();
 
                         if (jenis == 1) {
                             System.out.print("Masukkan Durasi (Menit): ");
-                            int durasi = scanner.nextInt();
+                            stadion.tambahOlahraga(new Futsal(nama, tim1, tim2, scanner.nextInt()));
                             scanner.nextLine();
-                            daftarOlahraga.add(new Futsal(namaBaru, tim1Baru, tim2Baru, durasi));
                         } else if (jenis == 2) {
                             System.out.print("Masukkan Jumlah Quarter: ");
-                            int quarter = scanner.nextInt();
+                            stadion.tambahOlahraga(new Basket(nama, tim1, tim2, scanner.nextInt()));
                             scanner.nextLine();
-                            daftarOlahraga.add(new Basket(namaBaru, tim1Baru, tim2Baru, quarter));
                         } else if (jenis == 3) {
                             System.out.print("Masukkan Jumlah Set: ");
-                            int set = scanner.nextInt();
+                            stadion.tambahOlahraga(new Voli(nama, tim1, tim2, scanner.nextInt()));
                             scanner.nextLine();
-                            daftarOlahraga.add(new Voli(namaBaru, tim1Baru, tim2Baru, set));
                         }
-
-                        System.out.println("Sukses! Pertandingan berhasil ditambahkan. (Total Pertandingan: " + daftarOlahraga.size() + ")");
                         break;
 
                     case 2:
-                        System.out.println("\n--- Daftar Pertandingan ---");
-                        if (daftarOlahraga.isEmpty()) {
-                            System.out.println("Belum ada pertandingan yang tersimpan.");
-                        } else {
-                            for (int i = 0; i < daftarOlahraga.size(); i++) {
-                                System.out.print((i + 1) + ". ");
-                                daftarOlahraga.get(i).tampilkanInfo();
-                            }
-                        }
+                        System.out.println("\n--- Daftar Pertandingan di Stadion ---");
+                        stadion.lihatSemuaOlahraga();
                         break;
 
                     case 3:
@@ -110,51 +72,63 @@ public class SistemPertandingan {
                         String kataKunci = scanner.nextLine();
 
                         try {
-                            cariOlahraga(kataKunci, daftarOlahraga);
+                            stadion.cariOlahraga(kataKunci);
                         } catch (PertandinganTidakDitemukanException e) {
                             System.out.println("Peringatan: " + e.getMessage());
-                        } finally {
-                            System.out.println("-> Sesi pencarian selesai dieksekusi.");
                         }
                         break;
 
                     case 4:
-                        System.out.println("\n-- Kelola Data Tim (HashMap) --");
-                        System.out.println("1. Tambah Tim Baru");
-                        System.out.println("2. Cari Tim via ID Tim");
-                        System.out.println("3. Tampilkan Semua Tim");
+                        System.out.println("\n-- Kelola Tim --");
+                        System.out.println("1. Tambah Tim");
+                        System.out.println("2. Cari Tim");
+                        System.out.println("3. Lihat Semua");
                         System.out.print("Pilih: ");
-                        int menuTim = scanner.nextInt();
+                        int menuA = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (menuTim == 1) {
-                            System.out.print("Masukkan ID Tim (sebagai Key): ");
+                        if (menuA == 1) {
+                            System.out.print("Masukkan ID Tim: ");
                             String idTim = scanner.nextLine();
-                            System.out.print("Masukkan Nama Tim Lengkap (sebagai Value): ");
+                            System.out.print("Masukkan Nama Tim: ");
                             String namaTim = scanner.nextLine();
 
-                            dataTim.put(idTim, namaTim);
-                            System.out.println("Berhasil menambahkan tim!");
-
-                        } else if (menuTim == 2) {
-                            System.out.print("Masukkan ID Tim yang dicari: ");
-                            String searchId = scanner.nextLine();
-
-                            if (dataTim.containsKey(searchId)) {
-                                System.out.println("Ditemukan! Nama Tim: " + dataTim.get(searchId));
-                            } else {
-                                System.out.println("Tim dengan ID tersebut tidak terdaftar.");
-                            }
-
-                        } else if (menuTim == 3) {
-                            System.out.println("Total Tim Terdaftar: " + dataTim.size());
-                            for (String keyId : dataTim.keySet()) {
-                                System.out.println("- ID Tim: " + keyId + " | Nama Tim: " + dataTim.get(keyId));
-                            }
+                            stadion.tambahTim(new Tim(idTim, namaTim));
+                        } else if (menuA == 2) {
+                            System.out.print("ID Tim yg dicari: ");
+                            stadion.cariTim(scanner.nextLine());
+                        } else if (menuA == 3) {
+                            stadion.lihatSemuaTim();
                         }
                         break;
 
                     case 5:
+                        System.out.println("\n-- Sistem Pertandingan (Asosiasi) --");
+                        System.out.print("Masukkan ID Tim: ");
+                        String inputIdTim = scanner.nextLine();
+
+                        Tim peminjam = stadion.getTim(inputIdTim);
+
+                        if (peminjam == null) {
+                            System.out.println("Gagal: Tim belum terdaftar!");
+                        } else if (stadion.getJumlahOlahraga() == 0) {
+                            System.out.println("Gagal: Belum ada pertandingan yang bisa dipilih.");
+                        } else {
+                            stadion.lihatSemuaOlahraga();
+                            System.out.print("Pilih Nomor Pertandingan yg ingin dimainkan: ");
+                            int noKoleksi = scanner.nextInt() - 1;
+                            scanner.nextLine();
+
+                            if (noKoleksi >= 0 && noKoleksi < stadion.getJumlahOlahraga()) {
+                                Olahraga itemPinjam = stadion.getOlahragaInt(noKoleksi);
+                                TransaksiPertandingan.prosesPertandingan(peminjam, itemPinjam);
+                            } else {
+                                System.out.println("Nomor pertandingan tidak valid!");
+                            }
+                        }
+                        break;
+
+                    case 6:
                         System.out.println("Terima kasih telah menggunakan Sistem Pertandingan!");
                         isRunning = false;
                         break;
