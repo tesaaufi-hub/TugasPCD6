@@ -1,6 +1,10 @@
 package com.mycompany.sistempertandingan;
 
-public class Tim {
+import java.io.Serializable;
+
+public class Tim implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String idTim;
     private String namaTim;
 

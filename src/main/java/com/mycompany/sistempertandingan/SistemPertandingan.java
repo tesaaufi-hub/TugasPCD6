@@ -8,7 +8,9 @@ public class SistemPertandingan {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Stadion stadion = new Stadion("Stadion Utama");
+
         stadion.bukaStadion();
+        stadion.muatDataDariFile();
 
         boolean isRunning = true;
 
@@ -17,10 +19,11 @@ public class SistemPertandingan {
             System.out.println("1. Tambah Pertandingan");
             System.out.println("2. Lihat Daftar Pertandingan");
             System.out.println("3. Cari Pertandingan");
-            System.out.println("4. Kelola Tim");
-            System.out.println("5. Transaksi Pertandingan (Demo Association)");
-            System.out.println("6. Keluar");
-            System.out.print("Pilih Menu: 1-6: ");
+            System.out.println("4. Manajemen Tim");
+            System.out.println("5. Transaksi Pertandingan");
+            System.out.println("6. Baca File Log Transaksi (Demo File I/O Teks)");
+            System.out.println("7. Simpan & Keluar");
+            System.out.print("Pilih Menu: 1-7: ");
 
             try {
                 int pilihan = scanner.nextInt();
@@ -129,6 +132,12 @@ public class SistemPertandingan {
                         break;
 
                     case 6:
+                        stadion.bacaLogTransaksi();
+                        break;
+
+                    case 7:
+                        System.out.println("Menyimpan sesi ke database internal...");
+                        stadion.simpanDataKeFile();
                         System.out.println("Terima kasih telah menggunakan Sistem Pertandingan!");
                         isRunning = false;
                         break;
@@ -144,7 +153,6 @@ public class SistemPertandingan {
                 System.out.println("\n[ERROR SISTEM] Terjadi kegagalan: " + e.getMessage());
             }
         }
-        
         scanner.close();
     }
 }

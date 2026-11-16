@@ -1,7 +1,9 @@
 package com.mycompany.sistempertandingan;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Stadion {
     private String namaStadion;
@@ -19,6 +21,60 @@ public class Stadion {
     public void bukaStadion() {
         System.out.println("\n*** Menginisialisasi sistem " + this.namaStadion + " ***");
         lapanganUtama.bukaLapangan();
+    }
+
+    public void simpanDataKeFile() {
+        try {
+            FileOutputStream fileKeluar = new FileOutputStream("data_stadion.dat");
+            ObjectOutputStream mesinPembeku = new ObjectOutputStream(fileKeluar);
+
+            mesinPembeku.writeObject(this.daftarOlahraga);
+            mesinPembeku.writeObject(this.dataTim);
+
+            mesinPembeku.close();
+            System.out.println("-> [SYSTEM LOG] Seluruh data berhasil disimpan (Serialization) ke dalam Harddisk!");
+        } catch (Exception e) {
+            System.out.println("-> [SYSTEM ERROR] Gagal menyimpan data: " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void muatDataDariFile() {
+        try {
+            File cekFile = new File("data_stadion.dat");
+            if (!cekFile.exists()) return;
+
+            FileInputStream fileMasuk = new FileInputStream(cekFile);
+            ObjectInputStream mesinPembangkit = new ObjectInputStream(fileMasuk);
+
+            this.daftarOlahraga = (ArrayList<Olahraga>) mesinPembangkit.readObject();
+            this.dataTim = (HashMap<String, Tim>) mesinPembangkit.readObject();
+
+            Olahraga.totalOlahragaBerhasilDibuat = this.daftarOlahraga.size();
+
+            mesinPembangkit.close();
+            System.out.println("-> [SYSTEM LOG] Data sistem berhasil dimuat ulang dari penyimpanan.");
+        } catch (Exception e) {
+            System.out.println("-> [SYSTEM ERROR] Gagal memuat data: " + e.getMessage());
+        }
+    }
+
+    public void bacaLogTransaksi() {
+        System.out.println("\n--- Riwayat Log Transaksi ---");
+        try {
+            File fileLog = new File("log_transaksi.txt");
+            if (!fileLog.exists()) {
+                System.out.println("Belum ada log transaksi stadion.");
+                return;
+            }
+            Scanner mesinBaca = new Scanner(fileLog);
+            while (mesinBaca.hasNextLine()) {
+                System.out.println(mesinBaca.nextLine());
+            }
+            mesinBaca.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Gagal membuka file log.");
+        }
     }
 
     public void tambahOlahraga(Olahraga o) {
@@ -73,13 +129,6 @@ public class Stadion {
         }
     }
 
-    public ArrayList<Olahraga> getDaftarOlahraga() {
-        return daftarOlahraga;
-    }
-
-    public HashMap<String, Tim> getDataTim() {
-        return dataTim;
-    }
     public Tim getTim(String idTim) { 
         return dataTim.get(idTim); 
     }
@@ -90,5 +139,13 @@ public class Stadion {
 
     public int getJumlahOlahraga() { 
         return daftarOlahraga.size(); 
+    }
+
+    public ArrayList<Olahraga> getDaftarOlahraga() {
+        return daftarOlahraga;
+    }
+
+    public HashMap<String, Tim> getDataTim() {
+        return dataTim;
     }
 }

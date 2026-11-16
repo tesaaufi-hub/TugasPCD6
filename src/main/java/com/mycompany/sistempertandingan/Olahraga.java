@@ -1,6 +1,8 @@
 package com.mycompany.sistempertandingan;
 
-public abstract class Olahraga {
+import java.io.Serializable;
+
+public abstract class Olahraga implements Serializable {
     protected String namaPertandingan;
     protected String tim1;
     protected String tim2;
